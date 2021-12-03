@@ -4,9 +4,10 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strconv"
 )
 
-func ReadFile(filePath string) (lines []string) {
+func ReadIntsFromFile(filePath string) (lines []int) {
 	file, err := os.Open(filePath)
 
 	if err != nil {
@@ -18,7 +19,8 @@ func ReadFile(filePath string) (lines []string) {
 	scanner.Split(bufio.ScanLines)
 
 	for scanner.Scan() {
-		lines = append(lines, scanner.Text())
+		value, _ := strconv.Atoi(scanner.Text())
+		lines = append(lines, value)
 	}
 
 	file.Close()

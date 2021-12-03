@@ -5,11 +5,11 @@ import (
 )
 
 func TestReadsLinesFromFile(t *testing.T) {
-	result := ReadFile("./test_input.txt")
-	expected := []string{
-		"5000",
-		"5001",
-		"5007",
+	result := ReadIntsFromFile("./test_input.txt")
+	expected := []int{
+		5000,
+		5001,
+		5007,
 	}
 
 	for index, _ := range result {
