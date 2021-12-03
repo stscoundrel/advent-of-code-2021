@@ -21,3 +21,7 @@ func TestGetsIncreasesInDepthSliding(t *testing.T) {
 		t.Error("Did not return expected number. Received", result, "expected ", expected)
 	}
 }
+
+func main() {
+
+}
