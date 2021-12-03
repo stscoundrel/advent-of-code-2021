@@ -25,3 +25,23 @@ func TestCountsIncreases(t *testing.T) {
 	}
 
 }
+
+func TestCountsIncreasesSlidingAverage(t *testing.T) {
+	values := []int{
+		607,
+		618,
+		618,
+		617,
+		647,
+		716,
+		769,
+		792,
+	}
+
+	result := CountValueIncreasesSliding(values)
+	expected := 5
+	if result != expected {
+		t.Error("Did not return expected content. Received", result, "expected", expected)
+	}
+
+}

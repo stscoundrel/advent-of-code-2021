@@ -11,3 +11,10 @@ func GetIncreasesInDepth() int {
 
 	return increases
 }
+
+func GetIncreasesInDepthSliding() int {
+	depthValues := reader.ReadIntsFromFile("./resources/depths.txt")
+	increases := measurements.CountValueIncreasesSliding(depthValues)
+
+	return increases
+}
