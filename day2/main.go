@@ -14,6 +14,14 @@ func LocateShip() int {
 	return location
 }
 
+func LocateShipWithAim() int {
+	steps := reader.ReadStringsFromFile("./resources/steps.txt")
+	location := locator.LocateWithAim(steps)
+
+	return location
+}
+
 func main() {
 	fmt.Println(LocateShip())
+	fmt.Println(LocateShipWithAim())
 }

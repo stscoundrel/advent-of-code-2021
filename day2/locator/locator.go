@@ -40,3 +40,26 @@ func Locate(steps []string) int {
 
 	return horizontal * depth
 }
+
+func LocateWithAim(steps []string) int {
+	horizontal := 0
+	depth := 0
+	aim := 0
+	movements := stepsToMovements(steps)
+
+	for _, movement := range movements {
+		switch movement.direction {
+		case "up":
+			aim -= movement.length
+		case "down":
+			aim += movement.length
+		default:
+			horizontal += movement.length
+			if aim != 0 {
+				depth += aim * movement.length
+			}
+		}
+	}
+
+	return horizontal * depth
+}
