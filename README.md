@@ -1,3 +1,3 @@
-# Go Template
+# Advent of Code 2021
 
-Template repo for generic Go module with CI
+[Advent of Code 2021](https://adventofcode.com/2021) in Go.
