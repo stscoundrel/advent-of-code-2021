@@ -19,25 +19,12 @@ func getReadings(values []string) (readings [][]int) {
 	return
 }
 
-func getGammaNumber(frequencies map[int]int) int {
-	gammaNumber := 0
-	highest := frequencies[0]
-
-	for key, value := range frequencies {
-		if value > highest {
-			gammaNumber = key
-		}
-	}
-
-	return gammaNumber
-}
-
-func GetGammaRateBinary(values []string) string {
-	gammaRate := []string{}
+func getRateBinary(values []string, rateGetter func(map[int]int) int) string {
+	rate := []string{}
 	readings := getReadings(values)
 	frequencyMap := map[int]map[int]int{}
 
-	for i := 0; i < 5; i++ {
+	for i := 0; i < len(values[0]); i++ {
 		frequencyMap[i] = make(map[int]int)
 		for _, reading := range readings {
 			newValue := 1
@@ -50,17 +37,16 @@ func GetGammaRateBinary(values []string) string {
 			frequencyMap[i][reading[i]] = newValue
 		}
 
-		gammaNumber := getGammaNumber(frequencyMap[i])
+		rateNumber := rateGetter(frequencyMap[i])
 
-		gammaRate = append(gammaRate, strconv.Itoa(gammaNumber))
+		rate = append(rate, strconv.Itoa(rateNumber))
 	}
 
-	return strings.Join(gammaRate[:], "")
+	return strings.Join(rate[:], "")
 }
 
-func GetGammaRateDecimal(values []string) int64 {
-	binaryGammaRate := GetGammaRateBinary(values)
-	decimal, _ := strconv.ParseInt(binaryGammaRate, 2, 64)
+func BinaryRateToDecimal(binaryRate string) int64 {
+	decimal, _ := strconv.ParseInt(binaryRate, 2, 64)
 
 	return decimal
 }
