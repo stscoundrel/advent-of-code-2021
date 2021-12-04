@@ -14,6 +14,14 @@ func ReadPowerConsumption() int64 {
 	return powerConsumption
 }
 
+func ReadLifeSupport() int64 {
+	values := reader.ReadStringsFromFile("./resources/diagnostics.txt")
+	powerConsumption := diagnostics.GetLifeSupportRatingFromDiagnostics(values)
+
+	return powerConsumption
+}
+
 func main() {
 	fmt.Println(ReadPowerConsumption())
+	fmt.Println(ReadLifeSupport())
 }
