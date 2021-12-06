@@ -49,6 +49,26 @@ func calculateScore(board [][]int, numbers []int) int {
 	return missedSum * lastNumber
 }
 
+func playAllBoards(boards [][][]int, numbers []int) (scores []int) {
+	playedNumbers := []int{}
+	wonBoards := []int{}
+
+	for _, number := range numbers {
+		playedNumbers = append(playedNumbers, number)
+
+		for boardIndex, board := range boards {
+			if !contains(wonBoards, boardIndex) {
+				if CheckBoard(board, playedNumbers) {
+					scores = append(scores, calculateScore(board, playedNumbers))
+					wonBoards = append(wonBoards, boardIndex)
+				}
+			}
+		}
+	}
+
+	return
+}
+
 func Play(boards [][][]int, numbers []int) (score int) {
 	playedNumbers := []int{}
 
@@ -62,6 +82,13 @@ func Play(boards [][][]int, numbers []int) (score int) {
 			}
 		}
 	}
+
+	return
+}
+
+func PlayUntilTheEnd(boards [][][]int, numbers []int) (score int) {
+	scores := playAllBoards(boards, numbers)
+	score = scores[(len(scores) - 1)]
 
 	return
 }

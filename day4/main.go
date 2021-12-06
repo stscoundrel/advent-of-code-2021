@@ -15,6 +15,15 @@ func PlaWithTheSquid() int {
 	return score
 }
 
+func LetTheSquidWin() int {
+	numbers := reader.ReadBingoNumbersFromFile("./resources/bingos.txt")
+	boards := reader.ReadBingoBoardsFromFile("./resources/bingos.txt")
+	score := boardgame.PlayUntilTheEnd(boards, numbers)
+
+	return score
+}
+
 func main() {
 	fmt.Println(PlaWithTheSquid())
+	fmt.Println(LetTheSquidWin())
 }
