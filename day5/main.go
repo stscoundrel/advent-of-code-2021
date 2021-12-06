@@ -10,7 +10,15 @@ import (
 func GetOverLappingWithTestData() int {
 	rawLines := reader.ReadLinesFromFile("./reader/test_input.txt")
 	lines := coordinates.ParseCoordinates(rawLines)
-	overlapping := coordinates.GetOverLappingPoints(lines)
+	overlapping := coordinates.GetOverLappingPoints(lines, false)
+
+	return overlapping
+}
+
+func GetOverLappingDiagonalWithTestData() int {
+	rawLines := reader.ReadLinesFromFile("./reader/test_input.txt")
+	lines := coordinates.ParseCoordinates(rawLines)
+	overlapping := coordinates.GetOverLappingPoints(lines, true)
 
 	return overlapping
 }
@@ -18,7 +26,15 @@ func GetOverLappingWithTestData() int {
 func GetOverLapping() int {
 	rawLines := reader.ReadLinesFromFile("./resources/vents.txt")
 	lines := coordinates.ParseCoordinates(rawLines)
-	overlapping := coordinates.GetOverLappingPoints(lines)
+	overlapping := coordinates.GetOverLappingPoints(lines, false)
+
+	return overlapping
+}
+
+func GetOverLappingDiagonal() int {
+	rawLines := reader.ReadLinesFromFile("./resources/vents.txt")
+	lines := coordinates.ParseCoordinates(rawLines)
+	overlapping := coordinates.GetOverLappingPoints(lines, true)
 
 	return overlapping
 }

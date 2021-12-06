@@ -57,8 +57,34 @@ func interpolatePoints(line Line, vertical bool) (linePoints []Coordinate) {
 	return
 }
 
+func interpolateDiagonalPoints(line Line) (linePoints []Coordinate) {
+	startCoordinate, endCoordinate := getStartAndEndCoordinates(line, false)
+
+	linePoints = append(linePoints, startCoordinate)
+
+	for startCoordinate.x < endCoordinate.x {
+		startCoordinate.x = startCoordinate.x + 1
+
+		if startCoordinate.y > endCoordinate.y {
+			startCoordinate.y = startCoordinate.y - 1
+		} else {
+			startCoordinate.y = startCoordinate.y + 1
+		}
+
+		newPoint := startCoordinate
+
+		linePoints = append(linePoints, newPoint)
+	}
+
+	return
+}
+
 func GetPointsOfLine(line Line) (coordinates []Coordinate) {
-	coordinates = interpolatePoints(line, isVertical((line)))
+	if isVerticalOrHorizontal(line) {
+		coordinates = interpolatePoints(line, isVertical((line)))
+	} else {
+		coordinates = interpolateDiagonalPoints(line)
+	}
 
 	return
 }
