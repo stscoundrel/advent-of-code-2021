@@ -12,3 +12,11 @@ func CountUniquesInOutput(fileName string) int {
 
 	return count
 }
+
+func DecipherOutput(fileName string) int {
+	lines := reader.ReadSignalInputFromFile(fileName)
+	signalGroup := signals.LinesToSignals(lines)
+	output := signals.DecipherSignalOutputs(signalGroup)
+
+	return output
+}

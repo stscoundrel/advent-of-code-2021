@@ -21,3 +21,12 @@ func TestCountsUniquesInOutout(t *testing.T) {
 		t.Error("Did not return expected number. Received", result, "expected ", expected)
 	}
 }
+
+func TestDeciptersOutout(t *testing.T) {
+	result := DecipherOutput("./resources/signals.txt")
+	var expected int = 1084606
+
+	if result != expected {
+		t.Error("Did not return expected number. Received", result, "expected ", expected)
+	}
+}
