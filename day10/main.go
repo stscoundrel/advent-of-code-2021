@@ -1,0 +1,14 @@
+package main
+
+import (
+	"github.com/stscoundrel/advent-of-code-2021/day10/navigation"
+	"github.com/stscoundrel/advent-of-code-2021/day10/reader"
+)
+
+func ScoreCorruptionErrors(fileName string) int {
+	lines := reader.ReadNavigationInputFromFile(fileName)
+	readings := navigation.NewReadings(lines)
+	score := navigation.ScoreSyntaxErrors(readings)
+
+	return score
+}
