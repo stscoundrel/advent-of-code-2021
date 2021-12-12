@@ -12,3 +12,13 @@ func ScoreCorruptionErrors(fileName string) int {
 
 	return score
 }
+
+func ScoreMissingEnds(fileName string) int {
+	lines := reader.ReadNavigationInputFromFile(fileName)
+	readings := navigation.NewReadings(lines)
+	incompletes := navigation.GetIncompleteReadings(readings)
+	scores := navigation.ScoreMissingEndings(incompletes)
+	score := navigation.GetMiddleScore(scores)
+
+	return score
+}

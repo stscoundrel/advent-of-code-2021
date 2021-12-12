@@ -7,12 +7,11 @@ import (
 const OK = "OK"
 const CORRUPTED = "CORRUPTED"
 const INCOMPLETE = "INCOMPLETE"
-const UNKOWN = "UNKNOWN"
 
 type Reading struct {
 	input     string
 	status    string
-	errorSign string
+	debugSign string
 }
 
 func (reading *Reading) isCorrupted() (bool, string) {
@@ -35,12 +34,36 @@ func (reading *Reading) isCorrupted() (bool, string) {
 	return false, ""
 }
 
+func (reading *Reading) isIncomplete() (bool, string) {
+	normalizedSigns := normalizeInput(reading.input)
+	signs := strings.Split(normalizedSigns, "")
+
+	startSymbols := []string{}
+	for _, sign := range signs {
+		if isStartSymbol(sign) {
+			startSymbols = append(startSymbols, sign)
+			continue
+		}
+
+		if isCloseSymbol(sign) {
+			// Remove last match
+			startSymbols = removeLastMatchOf(sign, startSymbols)
+		}
+	}
+
+	return true, strings.Join(startSymbols, "")
+}
+
 func (reading *Reading) parseStatus() {
-	isCorrupted, errorSign := reading.isCorrupted()
+	isCorrupted, debugSign := reading.isCorrupted()
+	isInComplete, incompleteSigns := reading.isIncomplete()
 
 	if isCorrupted {
 		reading.status = CORRUPTED
-		reading.errorSign = errorSign
+		reading.debugSign = debugSign
+	} else if isInComplete {
+		reading.status = INCOMPLETE
+		reading.debugSign = incompleteSigns
 	}
 }
 
@@ -54,6 +77,18 @@ func GetCorruptedReadings(readings []Reading) []Reading {
 	}
 
 	return corrupted
+}
+
+func GetIncompleteReadings(readings []Reading) []Reading {
+	incomplete := []Reading{}
+
+	for _, reading := range readings {
+		if reading.status == INCOMPLETE {
+			incomplete = append(incomplete, reading)
+		}
+	}
+
+	return incomplete
 }
 
 func NewReading(readingValue string) Reading {
