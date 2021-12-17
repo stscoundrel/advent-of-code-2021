@@ -1,6 +1,6 @@
 package octopuses
 
-func getFlashes(step int, octopuses [][]Octopus) int {
+func getFlashes(octopuses [][]Octopus) int {
 	flashes := 0
 
 	for x, row := range octopuses {
@@ -14,6 +14,10 @@ func getFlashes(step int, octopuses [][]Octopus) int {
 	return flashes
 }
 
+func isSimulatenousFlash(octopuses [][]Octopus) bool {
+	return getFlashes(octopuses) == 100
+}
+
 func PassTime(steps int, octopuses [][]Octopus) int {
 	flashes := 0
 
@@ -24,16 +28,29 @@ func PassTime(steps int, octopuses [][]Octopus) int {
 			}
 		}
 
-		flashes += getFlashes(step, octopuses)
-
-		// for x, row := range octopuses {
-		// 	for y, _ := range row {
-		// 		fmt.Print(octopuses[x][y].energy)
-		// 	}
-		// 	fmt.Println("")
-		// }
-		// fmt.Println("#############################")
+		flashes += getFlashes(octopuses)
 	}
 
 	return flashes
+}
+
+func GetSimulatenousFlash(octopuses [][]Octopus) int {
+	step := 1
+	simultaneousFlash := 0
+
+	for simultaneousFlash == 0 {
+		for x, row := range octopuses {
+			for y, _ := range row {
+				octopuses[x][y].increaseEnergy(step, octopuses)
+			}
+		}
+
+		if isSimulatenousFlash(octopuses) {
+			simultaneousFlash = step
+		}
+
+		step += 1
+	}
+
+	return simultaneousFlash
 }

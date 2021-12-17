@@ -30,3 +30,21 @@ func TestGetsFlashesInData(t *testing.T) {
 		t.Error("Did not return expected number. Received", result, "expected ", expected)
 	}
 }
+
+func TestGetsSimutaneousFlashInTestData(t *testing.T) {
+	result := CalculateSimultaneousFlash("./reader/test_input.txt")
+	var expected int = 195
+
+	if result != expected {
+		t.Error("Did not return expected number. Received", result, "expected ", expected)
+	}
+}
+
+func TestGetsSimutaneousFlashInData(t *testing.T) {
+	result := CalculateSimultaneousFlash("./resources/input.txt")
+	var expected int = 403
+
+	if result != expected {
+		t.Error("Did not return expected number. Received", result, "expected ", expected)
+	}
+}

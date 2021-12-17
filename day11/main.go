@@ -12,3 +12,11 @@ func CalculateFlashes(fileName string, steps int) int {
 
 	return flashes
 }
+
+func CalculateSimultaneousFlash(fileName string) int {
+	grid := reader.ReadGridFromFile(fileName)
+	octopusGroup := octopuses.GridToOctopuses(grid)
+	flashPoint := octopuses.GetSimulatenousFlash(octopusGroup)
+
+	return flashPoint
+}
