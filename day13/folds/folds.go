@@ -4,21 +4,11 @@ func separateByFold(points []Point, fold Fold) ([]Point, []Point) {
 	keep := []Point{}
 	transform := []Point{}
 
-	if fold.direction == "y" {
-		for _, point := range points {
-			if point.y < fold.value {
-				keep = append(keep, point)
-			} else {
-				transform = append(transform, point)
-			}
-		}
-	} else {
-		for _, point := range points {
-			if point.x < fold.value {
-				keep = append(keep, point)
-			} else {
-				transform = append(transform, point)
-			}
+	for _, point := range points {
+		if fold.direction == "y" && (point.y < fold.value) || fold.direction == "x" && (point.x < fold.value) {
+			keep = append(keep, point)
+		} else {
+			transform = append(transform, point)
 		}
 	}
 
