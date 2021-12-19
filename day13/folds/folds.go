@@ -45,9 +45,5 @@ func CountSpaces(points []Point, folds []Fold) int {
 		folded = doFold(folded, fold)
 	}
 
-	// for _, point := range folded {
-	// 	fmt.Println("X:", point.x, " y:", point.y)
-	// }
-
 	return calculateDots(folded)
 }

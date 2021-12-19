@@ -1,5 +1,7 @@
 package folds
 
+import "fmt"
+
 func getSize(points []Point) (int, int) {
 	width := points[0].x
 	height := points[0].y
@@ -32,9 +34,9 @@ func getPointGrid(points []Point) [][]int {
 		grid[point.y][point.x] = 1
 	}
 
-	// for _, row := range grid {
-	// 	fmt.Println(row)
-	// }
+	for _, row := range grid {
+		fmt.Println(row)
+	}
 
 	return grid
 }
