@@ -50,36 +50,7 @@ func canVisitSmallCave(segment string, paths []string) bool {
 
 }
 
-func findPaths(currentSegment string, accumulatedPath []string, count int, paths map[string][]string) int {
-	for _, pathSegment := range paths[currentSegment] {
-		if isEnd(pathSegment) {
-			count += 1
-			continue
-		}
-
-		if isStart(pathSegment) {
-			continue
-		}
-
-		if isSmallCave(pathSegment) && isVisited(pathSegment, accumulatedPath) {
-			continue
-		}
-
-		currentPathAccumulation := append(accumulatedPath, currentSegment)
-		count = findPaths(pathSegment, currentPathAccumulation, count, paths)
-	}
-
-	return count
-}
-
-func CountPaths(paths map[string][]string) int {
-	accumulatedPath := []string{}
-	startSegment := "start"
-
-	return findPaths(startSegment, accumulatedPath, 0, paths)
-}
-
-func findDualVisitPaths(currentSegment string, accumulatedPath []string, count int, paths map[string][]string, smallCaveVisits map[string]int) int {
+func findPaths(currentSegment string, accumulatedPath []string, count int, paths map[string][]string, allowDualVisits bool) int {
 	for _, pathSegment := range paths[currentSegment] {
 		if isEnd(pathSegment) {
 			count += 1
@@ -91,22 +62,27 @@ func findDualVisitPaths(currentSegment string, accumulatedPath []string, count i
 		}
 
 		if isSmallCave(pathSegment) {
-			if !canVisitSmallCave(pathSegment, append(accumulatedPath, currentSegment)) {
-				continue
+			if allowDualVisits {
+				if !canVisitSmallCave(pathSegment, append(accumulatedPath, currentSegment)) {
+					continue
+				}
+			} else {
+				if isVisited(pathSegment, accumulatedPath) {
+					continue
+				}
 			}
 		}
 
 		currentPathAccumulation := append(accumulatedPath, currentSegment)
-		count = findDualVisitPaths(pathSegment, currentPathAccumulation, count, paths, smallCaveVisits)
+		count = findPaths(pathSegment, currentPathAccumulation, count, paths, allowDualVisits)
 	}
 
 	return count
 }
 
-func CountDualVisitPaths(paths map[string][]string) int {
+func CountPaths(paths map[string][]string, allowDualVisits bool) int {
 	accumulatedPath := []string{}
 	startSegment := "start"
-	smallCaveVisits := map[string]int{}
 
-	return findDualVisitPaths(startSegment, accumulatedPath, 0, paths, smallCaveVisits)
+	return findPaths(startSegment, accumulatedPath, 0, paths, allowDualVisits)
 }

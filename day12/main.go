@@ -7,14 +7,14 @@ import (
 
 func CountPaths(fileName string) int {
 	pathInput := reader.ReadPathsFromFile(fileName)
-	count := paths.CountPaths(pathInput)
+	count := paths.CountPaths(pathInput, false)
 
 	return count
 }
 
 func CountDualVisitPaths(fileName string) int {
 	pathInput := reader.ReadPathsFromFile(fileName)
-	count := paths.CountDualVisitPaths(pathInput)
+	count := paths.CountPaths(pathInput, true)
 
 	return count
 }
