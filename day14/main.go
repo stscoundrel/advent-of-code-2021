@@ -8,7 +8,15 @@ import (
 func GetMostAndLeastCommonDifference(fileName string, iterations int) int {
 	template, rawRules := reader.ReadInstructions(fileName)
 	rules := polymer.ParseRules(rawRules)
-	most, least := polymer.GetMostAndLeastCommon(template, rules, iterations)
+	most := 0
+	least := 0
 
-	return most - least
+	// Use linear bruteforce for part 1
+	if iterations == 10 {
+		most, least = polymer.GetMostAndLeastCommonLinear(template, rules, iterations)
+		return most - least
+	} else {
+		most, least = polymer.GetMostAndLeastCommon(template, rules, iterations)
+		return most - least
+	}
 }

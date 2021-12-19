@@ -39,27 +39,9 @@ func buildFrequencyMap(template string) map[string]int {
 	return frequency
 }
 
-func GetMostAndLeastCommon(template string, rules []Rule, iterations int) (int, int) {
+func GetMostAndLeastCommonLinear(template string, rules []Rule, iterations int) (int, int) {
 	buildTemplate := buildPolymer(template, rules, iterations)
 	frequencyMap := buildFrequencyMap(buildTemplate)
 
-	least := 0
-	most := 0
-
-	for _, value := range frequencyMap {
-		if least == 0 && most == 0 {
-			least = value
-			most = value
-		}
-
-		if value < least {
-			least = value
-		}
-
-		if value > most {
-			most = value
-		}
-	}
-
-	return most, least
+	return getMostAndLeastCommonInMap(frequencyMap)
 }
