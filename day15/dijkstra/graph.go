@@ -1,15 +1,5 @@
 package dijkstra
 
-func containsNode(node string, edges []edge) bool {
-	for _, edge := range edges {
-		if edge.node == node {
-			return true
-		}
-	}
-
-	return false
-}
-
 type edge struct {
 	node   string
 	weight int
@@ -37,7 +27,6 @@ func (g *graph) GetPath(origin, destiny string) (int, []string) {
 	visited := make(map[string]bool)
 
 	for len(*h.values) > 0 {
-		// Find the nearest yet to visit node
 		p := h.pop()
 		node := p.nodes[len(p.nodes)-1]
 
@@ -50,11 +39,8 @@ func (g *graph) GetPath(origin, destiny string) (int, []string) {
 		}
 
 		for _, e := range g.getEdges(node) {
-			// fmt.Println("Checking node:", node)
-			// fmt.Println("Weight:", e.weight)
 
 			if !visited[e.node] {
-				// We calculate the total spent so far plus the cost and the path of getting here
 				h.push(path{value: p.value + e.weight, nodes: append([]string{}, append(p.nodes, e.node)...)})
 			}
 		}

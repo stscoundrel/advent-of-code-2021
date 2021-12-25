@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"strconv"
 
 	"github.com/stscoundrel/advent-of-code-2021/day15/dijkstra"
@@ -22,14 +21,28 @@ func GetMostEfficientPath(fileName string) int {
 		}
 	}
 
-	// fmt.Println(graph)
+	endPoint := strconv.Itoa(len(griddata[0])-1) + string("-") + strconv.Itoa(len(griddata)-1)
+	risk, _ := graph.GetPath("0-0", endPoint)
+
+	return risk
+}
+
+func GetMostEfficientFullPath(fileName string) int {
+	graph := dijkstra.NewGraph()
+	partialGrid := reader.ReadGridFromFile(fileName)
+	griddata := grid.Enlarge(partialGrid)
+
+	for x, row := range griddata {
+		for y, _ := range row {
+			point := grid.NewPoint(x, y, griddata[x][y])
+			for _, pointrelation := range grid.GetPointNeighbours(point, griddata) {
+				graph.AddEdge(pointrelation.Origin, pointrelation.Destination, pointrelation.Value)
+			}
+		}
+	}
 
 	endPoint := strconv.Itoa(len(griddata[0])-1) + string("-") + strconv.Itoa(len(griddata)-1)
-	fmt.Println("end is ", endPoint)
-	risk, path := graph.GetPath("0-0", endPoint)
-
-	fmt.Println(risk)
-	fmt.Println(path)
+	risk, _ := graph.GetPath("0-0", endPoint)
 
 	return risk
 }

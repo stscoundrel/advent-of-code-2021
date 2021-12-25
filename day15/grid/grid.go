@@ -37,6 +37,32 @@ func GetPointNeighbours(point Point, grid [][]int) []PointRelation {
 	return neighbours
 }
 
-func GridToEdges(grid [][]int) {
+func Enlarge(grid [][]int) [][]int {
+	multiplier := 5
 
+	width := len(grid[0])
+	height := len(grid)
+	newWidth := multiplier * width
+	newHeight := multiplier * height
+
+	largerGrid := [][]int{}
+
+	for i := 0; i < newHeight; i += 1 {
+		largerGrid = append(largerGrid, make([]int, newWidth))
+	}
+
+	for xM := 0; xM < 5; xM++ {
+		for yM := 0; yM < 5; yM++ {
+			for xT := 0; xT < width; xT++ {
+				for yT := 0; yT < height; yT++ {
+					x := xM*width + xT
+					y := yM*height + yT
+					value := grid[xT][yT] + xM + yM
+
+					largerGrid[x][y] = ((value - 1) % 9) + 1
+				}
+			}
+		}
+	}
+	return largerGrid
 }
