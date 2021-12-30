@@ -5,5 +5,13 @@ import (
 )
 
 func CalculateHighestShot(targetGrid probes.Grid) int {
-	return probes.BruteforceHighestShot(targetGrid)
+	result, _ := probes.BruteforceHighestShot(targetGrid)
+
+	return result
+}
+
+func CalculateDistinctHits(targetGrid probes.Grid) int {
+	_, result := probes.BruteforceHighestShot(targetGrid)
+
+	return result
 }

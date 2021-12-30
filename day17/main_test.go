@@ -25,3 +25,23 @@ func TestGetsHighestInGrid(t *testing.T) {
 		t.Error("Did not return expected number. Received", result, "expected ", expected)
 	}
 }
+
+func TestCountsHitsInTestGrid(t *testing.T) {
+	grid := probes.Grid{XStart: 20, XEnd: 30, YStart: -5, YEnd: -10}
+	result := CalculateDistinctHits(grid)
+	expected := 112
+
+	if result != expected {
+		t.Error("Did not return expected number. Received", result, "expected ", expected)
+	}
+}
+
+func TestCountsHitsInGrid(t *testing.T) {
+	grid := probes.Grid{XStart: 207, XEnd: 263, YStart: -63, YEnd: -115}
+	result := CalculateDistinctHits(grid)
+	expected := 4973
+
+	if result != expected {
+		t.Error("Did not return expected number. Received", result, "expected ", expected)
+	}
+}

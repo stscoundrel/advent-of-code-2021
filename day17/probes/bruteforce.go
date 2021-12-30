@@ -12,30 +12,31 @@ func getHighestProbe(probes []Probe) int {
 	return highest
 }
 
-func BruteforceHighestShot(grid Grid) int {
-	xLimit := 150
-	yLimit := 150
+func BruteforceHighestShot(grid Grid) (int, int) {
+	xLimit := 275
+	yLimit := 275
 	succesfulProbes := []Probe{}
 
-	for x := 1; x < xLimit; x += 1 {
-		for y := 1; y < yLimit; y += 1 {
+	for x := -xLimit; x < xLimit; x += 1 {
+		for y := -yLimit; y < yLimit; y += 1 {
 			probeIsInTheAir := true
 			probe := newProbe(x, y)
 
 			for probeIsInTheAir {
 				probe.move()
 
-				if probe.hitGrid(grid) {
-					succesfulProbes = append(succesfulProbes, probe)
+				if probe.isPastGrid(grid) {
 					probeIsInTheAir = false
+					continue
 				}
 
-				if probe.isPastGrid(grid) {
+				if probe.hitGrid(grid) {
+					succesfulProbes = append(succesfulProbes, probe)
 					probeIsInTheAir = false
 				}
 			}
 		}
 	}
 
-	return getHighestProbe(succesfulProbes)
+	return getHighestProbe(succesfulProbes), len(succesfulProbes)
 }
