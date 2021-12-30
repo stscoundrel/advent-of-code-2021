@@ -27,7 +27,6 @@ func BruteforceHighestShot(grid Grid) (int, int) {
 
 				if probe.isPastGrid(grid) {
 					probeIsInTheAir = false
-					continue
 				}
 
 				if probe.hitGrid(grid) {
