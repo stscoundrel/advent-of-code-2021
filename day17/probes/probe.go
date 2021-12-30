@@ -1,13 +1,11 @@
 package probes
 
 type Probe struct {
-	x                 int
-	y                 int
-	xVelocity         int
-	yVelocity         int
-	originalXVelocity int
-	originalYVelocity int
-	highestY          int
+	x         int
+	y         int
+	xVelocity int
+	yVelocity int
+	highestY  int
 }
 
 func (packet *Probe) move() {
@@ -47,12 +45,10 @@ func (packet *Probe) isPastGrid(grid Grid) bool {
 
 func newProbe(x int, y int) Probe {
 	return Probe{
-		x:                 0,
-		y:                 0,
-		originalXVelocity: x,
-		originalYVelocity: y,
-		xVelocity:         x,
-		yVelocity:         y,
-		highestY:          0,
+		x:         0,
+		y:         0,
+		xVelocity: x,
+		yVelocity: y,
+		highestY:  0,
 	}
 }
