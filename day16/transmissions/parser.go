@@ -5,35 +5,37 @@ import (
 	"strings"
 )
 
+func joinBits(bitRange []string) string {
+	return strings.Join(bitRange, "")
+}
+
 func binaryToDecimal(binary string) int {
 	number, _ := strconv.ParseInt(binary, 2, 64)
 	return int(number)
 }
 
 func getVersion(transmission []string, bitsRead *int) int {
-	version := strings.Join(transmission[*bitsRead:*bitsRead+3], "")
+	version := joinBits(transmission[*bitsRead : *bitsRead+3])
 	*bitsRead += 3
 	return binaryToDecimal(version)
 }
 
 func getTypeId(transmission []string, bitsRead *int) int {
-	typeId := strings.Join(transmission[*bitsRead:*bitsRead+3], "")
+	typeId := joinBits(transmission[*bitsRead : *bitsRead+3])
 	*bitsRead += 3
 	return binaryToDecimal(typeId)
 }
 
 func parseSubPacketLength(transmission []string, bitsRead *int) (int, int) {
 	subpacket := ""
-	lengthType := 0
+	lengthType, _ := strconv.Atoi(transmission[*bitsRead])
+	*bitsRead += 1
 
-	if transmission[*bitsRead] == "0" {
-		*bitsRead += 1
-		subpacket = strings.Join(transmission[*bitsRead:*bitsRead+15], "")
+	if lengthType == 0 {
+		subpacket = joinBits(transmission[*bitsRead : *bitsRead+15])
 		*bitsRead += 15
 	} else {
-		lengthType = 1
-		*bitsRead += 1
-		subpacket = strings.Join(transmission[*bitsRead:*bitsRead+11], "")
+		subpacket = joinBits(transmission[*bitsRead : *bitsRead+11])
 		*bitsRead += 11
 	}
 
@@ -46,7 +48,7 @@ func parseLiteralValuePacket(packet Packet, transmission []string, bitsRead *int
 
 	for isProcessing {
 		fiveBits := transmission[*bitsRead : *bitsRead+5]
-		hexNumber += strings.Join(fiveBits[1:5], "")
+		hexNumber += joinBits(fiveBits[1:5])
 		if fiveBits[0] == "0" {
 			isProcessing = false
 		}
@@ -86,7 +88,7 @@ func parsePacket(transmission []string, bitsRead *int) Packet {
 		typeId:  getTypeId(transmission, bitsRead),
 	}
 
-	if packet.typeId == LITERAL_PACKAGE {
+	if packet.isLiteralPackage() {
 		packet = parseLiteralValuePacket(packet, transmission, bitsRead)
 	} else {
 		packet = parseOperatorPacket(packet, transmission, bitsRead)

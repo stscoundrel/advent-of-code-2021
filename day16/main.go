@@ -11,3 +11,8 @@ func SumVersionNumbers(fileName string) int {
 
 	return versionSum
 }
+
+func GetTransmissionValue(fileName string) int {
+	hexTransmission := reader.ReadGTransmissionFromFile(fileName)
+	return transmissions.GetValue(hexTransmission)
+}
